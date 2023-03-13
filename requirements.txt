@@ -1,6 +1,9 @@
 asgiref==3.6.0
+beautifulsoup4==4.11.2
+coverage==7.2.1
 dj-database-url==1.2.0
 Django==4.1.7
+django-bootstrap4==22.3
 flake8==6.0.0
 gunicorn==20.1.0
 mccabe==0.7.0
@@ -10,5 +13,7 @@ pycodestyle==2.10.0
 pyflakes==3.0.1
 python-dotenv==1.0.0
 setuptools==67.6.0
+soupsieve==2.4
 sqlparse==0.4.3
 wheel==0.38.4
+whitenoise==6.4.0

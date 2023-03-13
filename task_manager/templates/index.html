@@ -1,1 +1,24 @@
-<h1>Hello, {{ who }}!</h1>
+{% extends "base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block description %}{% trans "Simple task manager" %}{% endblock %}
+{% block title %}{% trans "Task manager" %}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body p-5 bg-light">
+        <div class="display-4">{% trans 'Welcome to Task manager!' %}</div>
+        <p class="lead"><i>{% trans 'Right set the task - first step to solve it' %}</i></p>
+        <hr>
+        {% if user.is_authenticated %}
+        {# need add link to tasks #}
+        <a type="link" class="btn btn-primary btn-lg" size= 'lg' href="{% url 'homepage' %}">
+        {% else %}
+        <a type="link" class="btn btn-primary btn-lg" size= 'lg' href="{% url 'homepage' %}">
+        {% endif %}
+          {% trans 'Go to tasks' %}
+        </a>
+    </div>
+</div>
+{% endblock %}

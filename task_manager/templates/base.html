@@ -1,0 +1,75 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block description %}{% endblock %}">
+    <title>{% block title %}{% endblock %}</title>
+    {% load bootstrap4 %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+        <a class="navbar-brand" href="{% url 'homepage' %}">{% trans 'Task manager' %}</a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggleExternalContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+            <ul class="navbar-nav mr-auto">
+                {# need update link #}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'homepage' %}">{% trans 'Users' %}</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    {# need update link #}
+                    <a class="nav-link" href="{% url 'homepage' %}">{% trans 'Statuses' %}</a>
+                </li>
+                <li class="nav-item">
+                    {# need update link #}
+                    <a class="nav-link" href="{% url 'homepage' %}">{% trans 'Labels' %}</a>
+                </li>
+                <li class="nav-item">
+                    {# need update link #}
+                    <a class="nav-link" href="{% url 'homepage' %}">{% trans 'Tasks' %}</a>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    {# need update link #}
+                    <a class="nav-link" href="{% url 'homepage' %}">{% trans 'logout' %}</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    {# need update link #}
+                    <a class="nav-link" href="{% url 'homepage' %}">{% trans 'Log in' %}</a>
+                </li>
+                <li class="nav-item">
+                    {# need update link #}
+                    <a class="nav-link" href="{% url 'homepage' %}">{% trans 'Sign up' %}</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="container wrapper flex-grow-1">
+        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+        {% block content %}{% endblock %}
+    </div>
+    <footer>
+        <div class="container flex-column my-5 pt-4 border-top">
+            <img class='ml-2' src="https://cdn2.hexlet.io/assets/hexlet_logo_wide-56fe12bf29287c1ac237ef1e5fa70e861e99a954af1f49504f654ae4990fa42b.png" alt="hexlet logo" height="25px">
+            <a href="https://ru.hexlet.io/" target="_blank">Hexlet</a>
+            <img class='ml-2' src="https://github.com/fluidicon.png" alt="GitHub logo" height="25px">
+            <a href="https://github.com/MarsBroshok96/python-project-52" target="_blank">{% trans 'Source' %}</a>
+        </div>
+    </footer>
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+</body>
+</html>
