@@ -19,9 +19,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
             <ul class="navbar-nav mr-auto">
-                {# need update link #}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'homepage' %}">{% trans 'Users' %}</a>
+                    <a class="nav-link" href="{% url 'user_list' %}">{% trans 'Users' %}</a>
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
@@ -41,17 +40,14 @@
             <ul class="navbar-nav">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    {# need update link #}
-                    <a class="nav-link" href="{% url 'homepage' %}">{% trans 'logout' %}</a>
+                    <a class="nav-link" href="{% url 'logout' %}">{% trans 'logout' %}</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    {# need update link #}
-                    <a class="nav-link" href="{% url 'homepage' %}">{% trans 'Log in' %}</a>
+                    <a class="nav-link" href="{% url 'login' %}">{% trans 'Log in' %}</a>
                 </li>
                 <li class="nav-item">
-                    {# need update link #}
-                    <a class="nav-link" href="{% url 'homepage' %}">{% trans 'Sign up' %}</a>
+                    <a class="nav-link" href="{% url 'register' %}">{% trans 'Sign up' %}</a>
                 </li>
                 {% endif %}
             </ul>

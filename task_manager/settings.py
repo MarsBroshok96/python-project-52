@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    # local apps
     'task_manager',
+    'task_manager.users',
 ]
 
 MIDDLEWARE = [
@@ -101,17 +103,20 @@ if not DEBUG:
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
+#    {  # noqa: E122
+#        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # noqa: E501, E122
+#    },  # noqa: E122
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # noqa: E501
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # noqa: E501
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # noqa: E501
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # noqa: E501
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # noqa: E501, E122
+        'OPTIONS': {
+            'min_length': 3,
+        }
+#    },  # noqa: E122
+#    {  # noqa: E122
+#        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # noqa: E501, E122
+#    },  # noqa: E122
+#    {  # noqa: E122
+#        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # noqa: E501, E122
     },
 ]
 
@@ -144,3 +149,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# print SQL queries in shell_plus
+SHELL_PLUS_PRINT_SQL = True

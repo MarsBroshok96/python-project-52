@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block description %}"Update user page"{% endblock %}
+{% block title %}"Update user"{% endblock %}
+{% block content %}
+<h1 class="my-4">Update user</h1>
+    <form class="form" method="post">
+      {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">
+              SignUp
+           </button>
+         {% endbuttons %}
+    </form>
+{% endblock %}

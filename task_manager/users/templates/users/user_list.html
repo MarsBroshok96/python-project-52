@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block description %}{% trans "Task manager's list of users" %}{% endblock %}
+{% block title %}{% trans "User list" %}{% endblock %}
+{% block content %}
+    <h1 class="my-4">{% trans "Users" %}</h1>
+    <table class="table table-striped">
+        {% if users %}
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>{% trans "Username" %}</th>
+                    <th>{% trans "Full name" %}</th>
+                    <th>{% trans "Create at" %}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.first_name }} {{ user.last_name }}</td>
+                        <td>{{ user.date_joined | date:"d.m.Y G:i" }}</td>
+                        <td class="text-right">
+                            {# need update links #}
+                            <a class="btn btn-info mr-2" href="{% url 'user_update' user.id %}">{% trans 'Update' %}</a>
+                            <a class="btn btn-danger mr2" href="{% url 'user_list' %}">{% trans 'Delete' %}</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        {% else %}
+            <div class="card-body">{% trans "No users yet" %}</div>
+        {% endif %}
+    </table>
+    {% endblock %}
