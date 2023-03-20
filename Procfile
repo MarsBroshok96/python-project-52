@@ -1,1 +1,1 @@
-web: gunicorn task_manager.wsgi
+web: python manage.py migrate && gunicorn task_manager.wsgi
