@@ -2,16 +2,16 @@
 {% load i18n %}
 {% load bootstrap4 %}
 
-{% block description %}"Registation page"{% endblock %}
-{% block title %}"Registration"{% endblock %}
+{% block description %}{% trans "Registation page" %}{% endblock %}
+{% block title %}{% trans "Registration" %}{% endblock %}
 {% block content %}
-<h1 class="my-4">Registration</h1>
+<h1 class="my-4">{% trans "Registration" %}</h1>
     <form class="form" method="post">
       {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
             <button type="submit" class="btn btn-primary">
-              SignUp
+              {% trans "SignUp" %} 
            </button>
          {% endbuttons %}
     </form>

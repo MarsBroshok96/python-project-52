@@ -11,6 +11,7 @@ MSG_REGISTERED = 'User successfully registered'
 MSG_UPDATED = 'User`s info successfully updated'
 MSG_UPDATE_ERROR = 'You can`t edit other users'
 MSG_NO_PERMISSION = 'You have no permission there!'
+MSG_DELETED = 'User successfully Deleted'
 
 
 # Create your views here.
@@ -73,3 +74,27 @@ class UserUpdateView(CustomLoginRequiredMixin, View):
         return render(request, self.template_name, {
             'form': form,
             'user_id': user_id})
+
+
+class UserDeleteView(CustomLoginRequiredMixin, View):
+    template_name = 'users/delete.html'
+    login_url = 'login'
+    redirect_field_name = ''
+
+    def get(self, request, *args, **kwargs):
+        user_id = kwargs.get('id')
+        user = get_object_or_404(User, pk=user_id)
+        if request.user != user:
+            messages.error(request, MSG_UPDATE_ERROR)
+            return redirect('user_list')
+
+        return render(request, self.template_name, {'user': user})
+
+    def post(self, request, *args, **kwargs):
+        user_id = kwargs.get('id')
+        user = get_object_or_404(User, pk=user_id)
+        if request.user != user:
+            return redirect('login')
+        user.delete()
+        messages.success(request, MSG_DELETED)
+        return redirect('user_list')

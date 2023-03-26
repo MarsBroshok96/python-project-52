@@ -7,3 +7,4 @@ staticfiles
 dist
 .coverage
 coverage.xml
+exp.txt

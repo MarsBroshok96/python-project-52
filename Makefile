@@ -22,3 +22,6 @@ test-coverage:
 		poetry run coverage run manager.py test ./task_manager/tests/
 		poetry run coverage report --omit=*/tests/*,*/migrations/*
 		poetry run coverage xml --omit=*/tests/*,*/migrations/*
+
+
+

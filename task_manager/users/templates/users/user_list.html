@@ -26,7 +26,7 @@
                         <td class="text-right">
                             {# need update links #}
                             <a class="btn btn-info mr-2" href="{% url 'user_update' user.id %}">{% trans 'Update' %}</a>
-                            <a class="btn btn-danger mr2" href="{% url 'user_list' %}">{% trans 'Delete' %}</a>
+                            <a class="btn btn-danger mr2" href="{% url 'user_del' user.id %}">{% trans 'Delete' %}</a>
                         </td>
                     </tr>
                     {% endfor %}

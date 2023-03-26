@@ -2,14 +2,14 @@
 {% load i18n %}
 {% load bootstrap4 %}
 
-{% block description %}Log in Task Manager{% endblock %}
-{% block title %}Log in{% endblock %}
+{% block description %}{% trans "Log in Task Manager" %}{% endblock %}
+{% block title %}{% trans "Log in" %}{% endblock %}
 
 {% block content %}
-    <h1 class="my-4">Log in</h1>
+    <h1 class="my-4">{% trans "Log in" %}</h1>
     <form class="form" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
-        <button class="btn btn-primary">Log in</button>
+        <button class="btn btn-primary">{% trans "Log in" %}</button>
     </form>
 {% endblock %}
