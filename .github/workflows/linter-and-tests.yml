@@ -20,17 +20,19 @@ jobs:
         run: |
           pip install poetry
           make install
-      # - name: CC
-      #   uses: paambaati/codeclimate-action@v3.2.0
-      #   if: github.ref_name == 'main'
-      #   env:
-      #     CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-      #   with:
-      #     coverageCommand: make test-coverage
-      #     debug: true
+      - name: CC
+        uses: paambaati/codeclimate-action@v3.2.0
+        if: github.ref_name == 'main'
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: make test-coverage
+          debug: true
       - name: flake8
         run: |
           make lint
-      # - name: pytest
-      #   run: |
-      #     make test
+      - name: tests
+        run: |
+          make test

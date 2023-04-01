@@ -17,9 +17,9 @@ translate:
 static:
 		poetry run python manage.py collectstatic
 test:
-		poetry run python manage.py test ./task_manager/tests/
+		poetry run python manage.py test -v 2 ./task_manager/tests/
 test-coverage:
-		poetry run coverage run manager.py test ./task_manager/tests/
+		poetry run coverage run manage.py test ./task_manager/tests/
 		poetry run coverage report --omit=*/tests/*,*/migrations/*
 		poetry run coverage xml --omit=*/tests/*,*/migrations/*
 
