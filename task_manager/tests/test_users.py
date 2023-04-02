@@ -60,13 +60,10 @@ class UsersTest(TestCase):
         self.assertIn('password2', errors)
         self.assertEqual([UNDER_MIN_PASS_MSG], errors['password2'])
 
-        self.assertEqual(self.user1.id, 1)
-        self.assertEqual(self.user2.id, 2)
-        self.assertFalse(User.objects.filter(id=3).exists())
         response = self.client.post(reverse('register'), data=good_params)
         self.assertRedirects(response, reverse('user_list'))
-        new_user = User.objects.filter(id=3).first()
-        self.assertEqual(new_user.username, good_params['username'])
+        new_user = User.objects.filter(username=good_params['username'])
+        self.assertTrue(new_user.exists())
 
     def test_user_update(self):
         self.client.force_login(self.user1)
