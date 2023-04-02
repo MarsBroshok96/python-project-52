@@ -44,11 +44,10 @@ class UsersTest(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse('create_status'))
         self.assertTemplateUsed(response, 'statuses/form_status.html')
-        self.assertFalse(Status.objects.filter(pk=3).exists())
         response = self.client.post(reverse('create_status'), data=params)
         self.assertRedirects(response, reverse('status_list'))
-        new_status = Status.objects.filter(pk=3).first()
-        self.assertEqual(new_status.name, params['name'])
+        new_status = Status.objects.filter(name=params['name'])
+        self.assertTrue(new_status.exists())
 
     def test_status_update(self):
         self.client.force_login(self.user)
