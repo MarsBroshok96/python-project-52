@@ -24,15 +24,15 @@ jobs:
         run: |
           pip install poetry
           make install
-      - name: CC
-        uses: paambaati/codeclimate-action@v3.2.0
-      #   if: github.ref_name == 'main'
-        with:
-          coverageCommand: make test-coverage
-          debug: true
       - name: flake8
         run: |
           make lint
       - name: tests
         run: |
           make test
+      - name: CC
+        uses: paambaati/codeclimate-action@v3.2.0
+      #   if: github.ref_name == 'main'
+        with:
+          coverageCommand: make test-coverage
+          debug: true
