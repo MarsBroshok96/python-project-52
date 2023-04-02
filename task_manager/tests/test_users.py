@@ -38,9 +38,6 @@ class UsersTest(TestCase):
         self.user1 = UserFactory()
         self.user2 = UserFactory()
 
-    def tearDown(self):
-        User.objects.all().delete()
-
     def test_user_list_view(self):
         response = self.client.get('/users/')
         self.assertEqual(response.status_code, 200)
