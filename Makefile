@@ -22,6 +22,7 @@ test-coverage:
 		poetry run coverage run manage.py test ./task_manager/tests/
 		poetry run coverage report --omit=*/tests/*,*/migrations/*
 		poetry run coverage xml --omit=*/tests/*,*/migrations/*
-
+shell:
+		poetry run python manage.py shell_plus --ipython
 
 

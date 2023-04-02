@@ -24,8 +24,7 @@
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    {# need update link #}
-                    <a class="nav-link" href="{% url 'homepage' %}">{% trans 'Statuses' %}</a>
+                    <a class="nav-link" href="{% url 'status_list' %}">{% trans 'Statuses' %}</a>
                 </li>
                 <li class="nav-item">
                     {# need update link #}

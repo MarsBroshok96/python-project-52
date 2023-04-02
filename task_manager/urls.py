@@ -25,4 +25,5 @@ urlpatterns = [
 
     # Apps:
     path('users/', include('task_manager.users.urls')),
+    path('statuses/', include('task_manager.statuses.urls')),
 ]

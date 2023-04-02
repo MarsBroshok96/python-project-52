@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block description %}{% trans 'Status deleting page' %}{% endblock %}
+{% block title %}{% trans 'Delete status' %}{% endblock %}
+{% block content %}
+<h1 class="my-4">{% trans 'Status deleting' %}</h1>
+    <form class="form" method="post">
+      {% csrf_token %}
+      <p>{% trans 'Are you sure you want to delete ' %}"{{ status.name }}"</p>
+        {% buttons %}
+            <button type="submit" class="btn btn-danger" rel="nofollow">
+              {% trans "Yes, delete" %}
+           </button>
+         {% endbuttons %}
+    </form>
+{% endblock %}

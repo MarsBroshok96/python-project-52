@@ -10,7 +10,7 @@ from .forms import SignUpForm
 MSG_REGISTERED = 'User successfully registered'
 MSG_UPDATED = 'User`s info successfully updated'
 MSG_UPDATE_ERROR = 'You can`t edit other users'
-MSG_NO_PERMISSION = 'You have no permission there!'
+MSG_NO_PERMISSION = 'You are not authorized! Please sign in'
 MSG_DELETED = 'User successfully Deleted'
 
 
@@ -18,6 +18,8 @@ MSG_DELETED = 'User successfully Deleted'
 class CustomLoginRequiredMixin(LoginRequiredMixin):
 
     no_permission_message = MSG_NO_PERMISSION
+    login_url = 'login'
+    redirect_field_name = ''
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -44,8 +46,6 @@ class SignUpView(SuccessMessageMixin, CreateView):
 
 class UserUpdateView(CustomLoginRequiredMixin, View):
     template_name = 'users/update.html'
-    login_url = 'login'
-    redirect_field_name = ''
 
     def get(self, request, *args, **kwargs):
         user_id = kwargs.get('id')
@@ -78,8 +78,6 @@ class UserUpdateView(CustomLoginRequiredMixin, View):
 
 class UserDeleteView(CustomLoginRequiredMixin, View):
     template_name = 'users/delete.html'
-    login_url = 'login'
-    redirect_field_name = ''
 
     def get(self, request, *args, **kwargs):
         user_id = kwargs.get('id')

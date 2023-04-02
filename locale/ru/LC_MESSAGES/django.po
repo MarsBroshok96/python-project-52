@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-26 23:27+0600\n"
+"POT-Creation-Date: 2023-04-02 22:21+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,125 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
+#: task_manager/statuses/models.py:9
+#, fuzzy
+msgid "created at"
+msgstr "Дата создания"
+
+#: task_manager/statuses/models.py:12
+msgid "modified at"
+msgstr "дата обновления"
+
+#: task_manager/statuses/models.py:20
+#, fuzzy
+msgid "name"
+msgstr "Имя"
+
+#: task_manager/statuses/models.py:27
+#, fuzzy
+msgid "status"
+msgstr "статус"
+
+#: task_manager/statuses/models.py:28
+#, fuzzy
+#| msgid "Statuses"
+msgid "statuses"
+msgstr "Статусы"
+
+#: task_manager/statuses/templates/statuses/delete_status.html:5
+#, fuzzy
+#| msgid "Status creating page"
+msgid "Status deleting page"
+msgstr "Страница создания статуса"
+
+#: task_manager/statuses/templates/statuses/delete_status.html:6
+#, fuzzy
+#| msgid "Create status"
+msgid "Delete status"
+msgstr "Создать статус"
+
+#: task_manager/statuses/templates/statuses/delete_status.html:8
+msgid "Status deleting"
+msgstr "Удаление статуса"
+
+#: task_manager/statuses/templates/statuses/delete_status.html:11
+msgid "Are you sure you want to delete "
+msgstr "Вы уверены, что хотите удалить"
+
+#: task_manager/statuses/templates/statuses/delete_status.html:14
+#: task_manager/users/templates/users/delete.html:14
+msgid "Yes, delete"
+msgstr "Да, уверен"
+
+#: task_manager/statuses/templates/statuses/status_list.html:4
+#, fuzzy
+msgid "Task manager's statuses"
+msgstr "Список статусов Менеджера задач"
+
+#: task_manager/statuses/templates/statuses/status_list.html:5
+#, fuzzy
+#| msgid "Statuses"
+msgid "Status list"
+msgstr "Статусы"
+
+#: task_manager/statuses/templates/statuses/status_list.html:7
+#: task_manager/templates/base.html:27
+msgid "Statuses"
+msgstr "Статусы"
+
+#: task_manager/statuses/templates/statuses/status_list.html:11
+#: task_manager/statuses/views.py:20 task_manager/statuses/views.py:21
+msgid "Create status"
+msgstr "Создать статус"
+
+#: task_manager/statuses/templates/statuses/status_list.html:18
+msgid "Name"
+msgstr "Имя"
+
+#: task_manager/statuses/templates/statuses/status_list.html:19
+msgid "Created at"
+msgstr "Дата создания"
+
+#: task_manager/statuses/templates/statuses/status_list.html:30
+#: task_manager/users/templates/users/update.html:14
+#: task_manager/users/templates/users/user_list.html:27
+msgid "Update"
+msgstr "Обновить"
+
+#: task_manager/statuses/templates/statuses/status_list.html:31
+#: task_manager/users/templates/users/user_list.html:28
+msgid "Delete"
+msgstr "Удалить"
+
+#: task_manager/statuses/templates/statuses/status_list.html:37
+#, fuzzy
+msgid "No statuses yet"
+msgstr "Нет статусов"
+
+#: task_manager/statuses/views.py:19
+msgid "Status creating page"
+msgstr "Страница создания статуса"
+
+#: task_manager/statuses/views.py:22
+msgid "Create"
+msgstr "Создать"
+
+#: task_manager/statuses/views.py:24
+msgid "Status updating page"
+msgstr "Страница обновления статуса"
+
+#: task_manager/statuses/views.py:25
+msgid "Update status"
+msgstr "обновить статус"
+
+#: task_manager/statuses/views.py:26
+msgid "Status updating"
+msgstr "Изменение статуса"
+
+#: task_manager/statuses/views.py:27
+msgid "Change"
+msgstr "Изменить"
+
 #: task_manager/templates/base.html:16 task_manager/templates/index.html:6
 msgid "Task manager"
 msgstr "Менеджер задач"
@@ -29,34 +148,30 @@ msgstr "Менеджер задач"
 msgid "Users"
 msgstr "Пользователи"
 
-#: task_manager/templates/base.html:28
-msgid "Statuses"
-msgstr "Статусы"
-
-#: task_manager/templates/base.html:32
+#: task_manager/templates/base.html:31
 msgid "Labels"
 msgstr "Метки"
 
-#: task_manager/templates/base.html:36
+#: task_manager/templates/base.html:35
 msgid "Tasks"
 msgstr "Задачи"
 
-#: task_manager/templates/base.html:43
+#: task_manager/templates/base.html:42
 msgid "logout"
 msgstr "Выход"
 
-#: task_manager/templates/base.html:47
+#: task_manager/templates/base.html:46
 #: task_manager/templates/registration/login.html:6
 #: task_manager/templates/registration/login.html:9
 #: task_manager/templates/registration/login.html:13
 msgid "Log in"
 msgstr "Вход"
 
-#: task_manager/templates/base.html:50
+#: task_manager/templates/base.html:49
 msgid "Sign up"
 msgstr "Регистрация"
 
-#: task_manager/templates/base.html:65
+#: task_manager/templates/base.html:64
 msgid "Source"
 msgstr "Исходный код"
 
@@ -96,10 +211,6 @@ msgstr "Удаление пользователя"
 msgid "Are you sure you want to delete"
 msgstr "Вы уверены, что хотите удалить"
 
-#: task_manager/users/templates/users/delete.html:14
-msgid "Yes, delete"
-msgstr "Да, уверен"
-
 #: task_manager/users/templates/users/register.html:5
 msgid "Registation page"
 msgstr "Страница регистрации"
@@ -121,11 +232,6 @@ msgstr "Страница обновления пользователя"
 #: task_manager/users/templates/users/update.html:8
 msgid "Update user"
 msgstr "Обновить пользователя"
-
-#: task_manager/users/templates/users/update.html:14
-#: task_manager/users/templates/users/user_list.html:28
-msgid "Update"
-msgstr "Обновить"
 
 #: task_manager/users/templates/users/user_list.html:4
 #, fuzzy
@@ -150,10 +256,6 @@ msgstr "Полное имя"
 msgid "Create at"
 msgstr "Дата создания"
 
-#: task_manager/users/templates/users/user_list.html:29
-msgid "Delete"
-msgstr "Удалить"
-
-#: task_manager/users/templates/users/user_list.html:35
+#: task_manager/users/templates/users/user_list.html:34
 msgid "No users yet"
 msgstr "Нет пользователей"
