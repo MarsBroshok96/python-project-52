@@ -60,8 +60,8 @@ class UsersTest(TestCase):
         self.assertIn('password2', errors)
         self.assertEqual([UNDER_MIN_PASS_MSG], errors['password2'])
 
-        self.assertTrue(User.objects.filter(id=1).exists())
-        self.assertTrue(User.objects.filter(id=2).exists())
+        self.assertEqual(self.user1.id, 1)
+        self.assertEqual(self.user2.id, 2)
         self.assertFalse(User.objects.filter(id=3).exists())
         response = self.client.post(reverse('register'), data=good_params)
         self.assertRedirects(response, reverse('user_list'))
