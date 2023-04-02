@@ -67,6 +67,7 @@ class UsersTest(TestCase):
         response = self.client.post(reverse('register'), data=good_params)
         self.assertRedirects(response, reverse('user_list'))
         new_user = User.objects.filter(pk=3).first()
+        new_user.refresh_from_db()
         self.assertEqual(new_user.username, good_params['username'])
 
     def test_user_update(self):
