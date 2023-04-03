@@ -8,7 +8,7 @@ from django.urls import reverse
 params = {'name': 'Random status name'}
 
 
-class UsersTest(TestCase):
+class StatusTest(TestCase):
 
     def setUp(self):
         self.client = Client()
