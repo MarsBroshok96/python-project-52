@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block description %}{{ page_description }}{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block content %}
+<h1 class="my-4">{{ page_h1 }}</h1>
+    <form class="form" method="post">
+      {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">
+              {{ page_btn_name }} 
+           </button>
+         {% endbuttons %}
+    </form>
+{% endblock %}

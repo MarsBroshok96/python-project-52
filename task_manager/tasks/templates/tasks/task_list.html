@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block description %}{% trans "Task manager's tasks" %}{% endblock %}
+{% block title %}{% trans "Task list" %}{% endblock %}
+{% block content %}
+    <h1 class="my-4">{% trans "Tasks" %}</h1>
+    <table class="table table-striped">
+        <div class="container">
+            <div class="row mb-4">
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'task_create' %}">{% trans "Create task" %}</a>
+            </div>
+        </div>
+        {% if tasks %}
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>{% trans "Name" %}</th>
+                    <th>{% trans "Status" %}</th>
+                    <th>{% trans "Author" %}</th>
+                    <th>{% trans "Executor" %}</th>
+                    <th>{% trans "Created at" %}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.id }}</td>
+                        <td>
+                            <a href="{% url 'task_detail' task.id %}">{{ task.name }}</a>
+                        </td>
+                        <td>{{ task.status }}</td>
+                        <td>{{ task.created_by }}</td>
+                        <td>{{ task.assigned_to }}</td>
+                        <td>{{ task.created_at | date:"d.m.Y G:i" }}</td>
+                        <td class="text-right">
+                            <a class="btn btn-info mr-2" href="{% url 'task_update' task.id %}">{% trans 'Update' %}</a>
+                            <a class="btn btn-danger mr2" href="{% url 'task_delete' task.id  %}">{% trans 'Delete' %}</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        {% else %}
+            <div class="card-body">{% trans "No tasks yet" %}</div>
+        {% endif %}
+    </table>
+    {% endblock %}

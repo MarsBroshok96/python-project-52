@@ -26,7 +26,7 @@ class StatusTest(TestCase):
                          )
 
         self.client.force_login(self.user)
-        response = self.client.get('/statuses/')
+        response = self.client.get(reverse('status_list'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.status1.name)
         self.assertContains(response, self.status2.name)

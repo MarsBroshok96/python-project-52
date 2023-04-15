@@ -7,11 +7,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from .forms import SignUpForm
+from django.db.models import ProtectedError
+
 MSG_REGISTERED = 'User successfully registered'
 MSG_UPDATED = 'User`s info successfully updated'
 MSG_UPDATE_ERROR = 'You can`t edit other users'
 MSG_NO_PERMISSION = 'You are not authorized! Please sign in'
 MSG_DELETED = 'User successfully Deleted'
+MSG_PROTECTED_USER = 'Can\'t delete user because it used'
 
 
 # Create your views here.
@@ -93,6 +96,10 @@ class UserDeleteView(CustomLoginRequiredMixin, View):
         user = get_object_or_404(User, pk=user_id)
         if request.user != user:
             return redirect('login')
-        user.delete()
-        messages.success(request, MSG_DELETED)
-        return redirect('user_list')
+        try:
+            user.delete()
+            messages.success(request, MSG_DELETED)
+            return redirect('user_list')
+        except ProtectedError:
+            messages.error(request, MSG_PROTECTED_USER)
+            return redirect('user_list')
