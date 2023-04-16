@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils.translation import gettext_lazy
 from django.urls import reverse_lazy
 from django.views import View
 from django.contrib import messages
@@ -57,9 +56,9 @@ class TaskListView(CustomLoginRequiredMixin, View):
 class TaskCreateView(CustomLoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     model = Task
-    fields = ['name', 'status', 'description', 'assigned_to']
+    fields = ['name', 'status', 'description', 'assigned_to', 'labels']
     success_url = reverse_lazy('task_list')
-    success_message = gettext_lazy('Task was created successfully')
+    success_message = _('Task was created successfully')
     extra_context = CONTEXT_CREATE
     template_name = 'tasks/task_form.html'
 
@@ -71,9 +70,9 @@ class TaskCreateView(CustomLoginRequiredMixin, SuccessMessageMixin, CreateView):
 class TaskUpdateView(CustomLoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     model = Task
-    fields = ['name', 'status', 'description', 'assigned_to']
+    fields = ['name', 'status', 'description', 'assigned_to', 'labels']
     success_url = reverse_lazy('task_list')
-    success_message = gettext_lazy('Task was updated successfully')
+    success_message = _('Task was updated successfully')
     extra_context = CONTEXT_UPDATE
     template_name = 'tasks/task_form.html'
 
@@ -98,7 +97,7 @@ class TaskDeleteView(CustomLoginRequiredMixin, SuccessMessageMixin, DeleteView):
         try:
             return super().post(request, *args, **kwargs)
         except ProtectedError:
-            messages.error(self.request, gettext_lazy('Task is protected'))
+            messages.error(self.request, _('Task is protected'))
             return redirect('task_list')
 
 

@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from task_manager.statuses.models import Status
+from task_manager.labels.models import Label
 
 
 class TimestampedModel(models.Model):
@@ -46,6 +47,12 @@ class Task(TimestampedModel):
         related_name='created_tasks',
         blank=True,
         null=True,
+    )
+    labels = models.ManyToManyField(
+        Label,
+        related_name='tasks',
+        blank=True,
+        verbose_name=_('Labels')
     )
 
     class Meta:

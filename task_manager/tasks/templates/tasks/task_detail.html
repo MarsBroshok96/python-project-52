@@ -34,7 +34,11 @@
         <div class="col">
           <h6>{% trans "labels:" %}</h6>
           <ul>
-            {#% for label in task.labels.all %#}
+            {% for label in task.labels.all %}
+              <li>{{ label.name }}</li>
+              {% empty %}
+                <div class="font-italic">{% trans "No labels" %}</div>
+            {% endfor %}
           </ul>
         </div>
       </div>

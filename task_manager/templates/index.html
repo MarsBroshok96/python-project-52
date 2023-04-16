@@ -12,10 +12,9 @@
         <p class="lead"><i>{% trans 'Right set the task - first step to solve it' %}</i></p>
         <hr>
         {% if user.is_authenticated %}
-        {# need add link to tasks #}
-        <a type="link" class="btn btn-primary btn-lg" size= 'lg' href="{% url 'homepage' %}">
+        <a type="link" class="btn btn-primary btn-lg" size= 'lg' href="{% url 'task_list' %}">
         {% else %}
-        <a type="link" class="btn btn-primary btn-lg" size= 'lg' href="{% url 'homepage' %}">
+        <a type="link" class="btn btn-primary btn-lg" size= 'lg' href="{% url 'login' %}">
         {% endif %}
           {% trans 'Go to tasks' %}
         </a>
