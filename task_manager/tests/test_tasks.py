@@ -12,7 +12,9 @@ class TaskTest(TestCase):
         self.user1 = UserFactory()
         self.user2 = UserFactory()
         self.status1 = StatusFactory()
-        self.task1 = TaskFactory(created_by=self.user1, status=self.status1)
+        self.task1 = TaskFactory(created_by=self.user1,
+                                 assigned_to=self.user1,
+                                 status=self.status1)
         self.task2 = TaskFactory()
 
     def test_task_list_view(self):
@@ -37,6 +39,30 @@ class TaskTest(TestCase):
                                               args=[self.task2.id]))
         self.assertContains(response, reverse('task_update',
                                               args=[self.task1.id]))
+
+    def test_filter_tasks_by_status(self):
+        self.client.force_login(self.user1)
+        response = self.client.get(reverse('task_list'),
+                                   data={'status': self.status1.id})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.task1.name)
+        self.assertNotContains(response, self.task2.name)
+
+    def test_filter_tasks_by_assigned_to(self):
+        self.client.force_login(self.user1)
+        response = self.client.get(reverse('task_list'),
+                                   data={'assigned_to': self.user1.id})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.task1.name)
+        self.assertNotContains(response, self.task2.name)
+
+    def test_filter_tasks_by_current_user(self):
+        self.client.force_login(self.user1)
+        response = self.client.get(reverse('task_list'),
+                                   data={'self_tasks': True})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.task1.name)
+        self.assertNotContains(response, self.task2.name)
 
     def test_create_task(self):
         good_params = {'name': 'Random task name',

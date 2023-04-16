@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load bootstrap4 %}
 
 {% block description %}{% trans "Task manager's tasks" %}{% endblock %}
 {% block title %}{% trans "Task list" %}{% endblock %}
 {% block content %}
     <h1 class="my-4">{% trans "Tasks" %}</h1>
-    <table class="table table-striped">
-        <div class="container">
-            <div class="row mb-4">
-                <a class="btn btn-outline-primary btn-sm" href="{% url 'task_create' %}">{% trans "Create task" %}</a>
-            </div>
+    <div class="container">
+        <div class="row mb-4">
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'task_create' %}">{% trans "Create task" %}</a>
         </div>
+    </div>
+    <div class="card-body bg-light">
+        <form method=""get" class="form-inline center my-auto">
+            {% bootstrap_form filter.form form_group_class="form-group" field_class="ml-2 mr-3" %}
+            <div><br><br></div>
+            <button class="btn btn-primary">{% trans "Show" %}</button>
+        </form>
+    </div>
+    <table class="table table-striped">
         {% if tasks %}
             <thead class="thead-dark">
                 <tr>

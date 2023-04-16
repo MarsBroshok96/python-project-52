@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views import View
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,6 +7,8 @@ from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from .models import Task
 from django.db.models import ProtectedError
 from django.utils.translation import gettext_lazy as _
+from django_filters.views import FilterView
+from .filter import TaskFilter
 
 
 MSG_NO_PERMISSION = _('You are not authorized! Please sign in')
@@ -42,15 +43,10 @@ class CustomLoginRequiredMixin(LoginRequiredMixin):
         return super().dispatch(request, *args, **kwargs)
 
 
-class TaskListView(CustomLoginRequiredMixin, View):
+class TaskListView(CustomLoginRequiredMixin, FilterView):
     template_name = 'tasks/task_list.html'
-
-    def get(self, request, *args, **kwargs):
-        tasks = Task.objects.all()[:15]
-        return render(request,
-                      self.template_name,
-                      context={'tasks': tasks}
-                      )
+    context_object_name = 'tasks'
+    filterset_class = TaskFilter
 
 
 class TaskCreateView(CustomLoginRequiredMixin, SuccessMessageMixin, CreateView):

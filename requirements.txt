@@ -11,6 +11,7 @@ dj-database-url==1.2.0
 Django==4.1.7
 django-bootstrap4==22.3
 django-extensions==3.2.1
+django-filter==23.1
 executing==1.2.0
 factory-boy==3.2.1
 Faker==18.3.1
