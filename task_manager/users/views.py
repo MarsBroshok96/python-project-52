@@ -8,13 +8,14 @@ from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from .forms import SignUpForm
 from django.db.models import ProtectedError
+from django.utils.translation import gettext_lazy as _
 
-MSG_REGISTERED = 'User successfully registered'
-MSG_UPDATED = 'User`s info successfully updated'
-MSG_UPDATE_ERROR = 'You can`t edit other users'
-MSG_NO_PERMISSION = 'You are not authorized! Please sign in'
-MSG_DELETED = 'User successfully Deleted'
-MSG_PROTECTED_USER = 'Can\'t delete user because it used'
+MSG_REGISTERED = _('User successfully registered')
+MSG_UPDATED = _('User`s info successfully updated')
+MSG_UPDATE_ERROR = _('You can`t edit other users')
+MSG_NO_PERMISSION = _('You are not authorized! Please sign in')
+MSG_DELETED = _('User successfully Deleted')
+MSG_PROTECTED_USER = _('Can\'t delete user because it used')
 
 
 # Create your views here.

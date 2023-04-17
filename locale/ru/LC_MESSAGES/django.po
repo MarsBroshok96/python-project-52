@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-16 23:44+0600\n"
+"POT-Creation-Date: 2023-04-17 23:20+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,6 +111,7 @@ msgid "No labels yet"
 msgstr "Нет меток"
 
 #: task_manager/labels/views.py:13 task_manager/tasks/views.py:14
+#: task_manager/users/views.py:16
 msgid "You are not authorized! Please sign in"
 msgstr "Вы не авторизованы! Пожалуйста, войдите в аккаунт"
 
@@ -379,10 +380,6 @@ msgstr "Выход"
 msgid "Log in"
 msgstr "Вход"
 
-#: task_manager/templates/registration/login.html:13
-msgid "Log in."
-msgstr "Войти"
-
 #: task_manager/templates/base.html:47
 msgid "Sign up"
 msgstr "Регистрация"
@@ -410,6 +407,10 @@ msgstr "Перейти к задачам"
 #: task_manager/templates/registration/login.html:5
 msgid "Log in Task Manager"
 msgstr "Войти в Менеджер задач"
+
+#: task_manager/templates/registration/login.html:13
+msgid "Log in."
+msgstr "Войти"
 
 #: task_manager/users/templates/users/delete.html:5
 msgid "Delete confirming page"
@@ -475,3 +476,31 @@ msgstr "Дата создания"
 #: task_manager/users/templates/users/user_list.html:34
 msgid "No users yet"
 msgstr "Нет пользователей"
+
+#: task_manager/users/views.py:13
+msgid "User successfully registered"
+msgstr "Пользователь успешно зарегистрирован"
+
+#: task_manager/users/views.py:14
+msgid "User`s info successfully updated"
+msgstr "Пользователь успешно изменён"
+
+#: task_manager/users/views.py:15
+msgid "You can`t edit other users"
+msgstr "У вас нет прав для изменения другого пользователя."
+
+#: task_manager/users/views.py:17
+msgid "User successfully Deleted"
+msgstr "Пользователь успешно удалён"
+
+#: task_manager/users/views.py:18
+msgid "Can't delete user because it used"
+msgstr "Невозможно удалить пользователя, потому что он используется"
+
+#: task_manager/views.py:7
+msgid "You are logged in"
+msgstr "Вы залогинены"
+
+#: task_manager/views.py:8
+msgid "You are logged out"
+msgstr "Вы разлогинены"
