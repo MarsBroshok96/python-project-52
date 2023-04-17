@@ -376,9 +376,12 @@ msgstr "Выход"
 #: task_manager/templates/base.html:44
 #: task_manager/templates/registration/login.html:6
 #: task_manager/templates/registration/login.html:9
-#: task_manager/templates/registration/login.html:13
 msgid "Log in"
 msgstr "Вход"
+
+#: task_manager/templates/registration/login.html:13
+msgid "Log in."
+msgstr "Войти"
 
 #: task_manager/templates/base.html:47
 msgid "Sign up"
