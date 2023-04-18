@@ -11,7 +11,7 @@ class TaskFilter(FilterSet):
     """Define filters for tasks list."""
     class Meta:
         model = Task
-        fields = ['status', 'assigned_to']
+        fields = ['status', 'executor']
 
     labels_query = Label.objects.values_list('id', 'name')
     labels = ChoiceFilter(label=_('Label'),

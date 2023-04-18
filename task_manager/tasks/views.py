@@ -52,7 +52,7 @@ class TaskListView(CustomLoginRequiredMixin, FilterView):
 class TaskCreateView(CustomLoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     model = Task
-    fields = ['name', 'description', 'status', 'assigned_to', 'labels']
+    fields = ['name', 'description', 'status', 'executor', 'labels']
     success_url = reverse_lazy('task_list')
     success_message = _('Task was created successfully')
     extra_context = CONTEXT_CREATE
@@ -66,7 +66,7 @@ class TaskCreateView(CustomLoginRequiredMixin, SuccessMessageMixin, CreateView):
 class TaskUpdateView(CustomLoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     model = Task
-    fields = ['name', 'description', 'status', 'assigned_to', 'labels']
+    fields = ['name', 'description', 'status', 'executor', 'labels']
     success_url = reverse_lazy('task_list')
     success_message = _('Task was updated successfully')
     extra_context = CONTEXT_UPDATE

@@ -40,7 +40,7 @@
                         </td>
                         <td>{{ task.status }}</td>
                         <td>{{ task.created_by }}</td>
-                        <td>{{ task.assigned_to }}</td>
+                        <td>{{ task.executor }}</td>
                         <td>{{ task.created_at | date:"d.m.Y G:i" }}</td>
                         <td class="text-right">
                             <a class="btn btn-info mr-2" href="{% url 'task_update' task.id %}">{% trans 'Update' %}</a>

@@ -28,7 +28,7 @@ class Task(TimestampedModel):
                                    null=True,
                                    verbose_name=_('Description')
                                    )
-    assigned_to = models.ForeignKey(
+    executor = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
         related_name='tasks',
