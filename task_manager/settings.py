@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'django_filters',
     'django_extensions',
     # local apps
     'task_manager',
@@ -124,6 +125,8 @@ AUTH_PASSWORD_VALIDATORS = [
 #        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # noqa: E501, E122
     },
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 ROLLBAR = {
     'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),

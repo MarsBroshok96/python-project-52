@@ -5,14 +5,16 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from .forms import SignUpForm
 from django.db.models import ProtectedError
 from django.utils.translation import gettext_lazy as _
 
+User = get_user_model()
+
 MSG_REGISTERED = _('User successfully registered')
 MSG_UPDATED = _('User`s info successfully updated')
-MSG_UPDATE_ERROR = _('You can`t edit other users')
+MSG_EDIT_ERROR = _('You can`t edit other users')
 MSG_NO_PERMISSION = _('You are not authorized! Please sign in')
 MSG_DELETED = _('User successfully Deleted')
 MSG_PROTECTED_USER = _('Can\'t delete user because it used')
@@ -43,7 +45,7 @@ class UsersListView(View):
 
 class SignUpView(SuccessMessageMixin, CreateView):
     form_class = SignUpForm
-    success_url = reverse_lazy('user_list')
+    success_url = reverse_lazy('login')
     template_name = 'users/register.html'
     success_message = MSG_REGISTERED
 
@@ -55,7 +57,7 @@ class UserUpdateView(CustomLoginRequiredMixin, View):
         user_id = kwargs.get('id')
         user = get_object_or_404(User, pk=user_id)
         if request.user != user:
-            messages.error(request, MSG_UPDATE_ERROR)
+            messages.error(request, MSG_EDIT_ERROR)
             return redirect('user_list')
 
         form = SignUpForm(instance=user)
@@ -87,7 +89,7 @@ class UserDeleteView(CustomLoginRequiredMixin, View):
         user_id = kwargs.get('id')
         user = get_object_or_404(User, pk=user_id)
         if request.user != user:
-            messages.error(request, MSG_UPDATE_ERROR)
+            messages.error(request, MSG_EDIT_ERROR)
             return redirect('user_list')
 
         return render(request, self.template_name, {'user': user})

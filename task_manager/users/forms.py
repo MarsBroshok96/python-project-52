@@ -1,13 +1,17 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
-FIRST_NAME_LABEL = 'First name'
-LAST_NAME_LABEL = 'Last name'
-EMAIL_HELP_TEXT = 'Enter a valid email address.'
-FIRST_NAME_HELP_TEXT = 'Required. Not more than 30 symbols'
-LAST_NAME_HELP_TEXT = 'Required. Not more than 30 symbols'
-MSG_REGISTERED = 'User successfully registered'
+User = get_user_model()
+
+
+FIRST_NAME_LABEL = _('First name')
+LAST_NAME_LABEL = _('Last name')
+EMAIL_HELP_TEXT = _('Enter a valid email address.')
+FIRST_NAME_HELP_TEXT = _('Required. Not more than 30 symbols')
+LAST_NAME_HELP_TEXT = _('Required. Not more than 30 symbols')
+MSG_REGISTERED = _('User successfully registered')
 
 
 class SignUpForm(UserCreationForm):

@@ -73,7 +73,9 @@ class LabelUpdateView(CustomLoginRequiredMixin,
     extra_context = CONTEXT_UPDATE
 
 
-class LabelDeleteView(CustomLoginRequiredMixin, DeleteView):
+class LabelDeleteView(CustomLoginRequiredMixin,
+                      SuccessMessageMixin,
+                      DeleteView):
 
     model = Label
     success_url = reverse_lazy('label_list')

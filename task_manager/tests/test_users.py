@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from task_manager.tests.factories import UserFactory
-from django.contrib.auth.models import User
+from task_manager.users.models import User
 from django.contrib.messages import get_messages
 from django.urls import reverse
 from faker import Faker

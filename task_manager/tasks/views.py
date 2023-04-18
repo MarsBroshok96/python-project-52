@@ -22,7 +22,7 @@ CONTEXT_CREATE = {'page_description': _('task creating page'),
 CONTEXT_UPDATE = {'page_description': _('task updating page'),
                   'page_title': _('Update task'),
                   'page_h1': _('Update task'),
-                  'page_btn_name': _('Create')
+                  'page_btn_name': _('Update')
                   }
 CONTEXT_DETAIL = {'page_description': _('task detail page'),
                   'page_title': _('Detail task'),
@@ -52,7 +52,7 @@ class TaskListView(CustomLoginRequiredMixin, FilterView):
 class TaskCreateView(CustomLoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     model = Task
-    fields = ['name', 'status', 'description', 'assigned_to', 'labels']
+    fields = ['name', 'description', 'status', 'assigned_to', 'labels']
     success_url = reverse_lazy('task_list')
     success_message = _('Task was created successfully')
     extra_context = CONTEXT_CREATE
@@ -66,7 +66,7 @@ class TaskCreateView(CustomLoginRequiredMixin, SuccessMessageMixin, CreateView):
 class TaskUpdateView(CustomLoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     model = Task
-    fields = ['name', 'status', 'description', 'assigned_to', 'labels']
+    fields = ['name', 'description', 'status', 'assigned_to', 'labels']
     success_url = reverse_lazy('task_list')
     success_message = _('Task was updated successfully')
     extra_context = CONTEXT_UPDATE

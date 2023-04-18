@@ -14,7 +14,7 @@ class TaskFilter(FilterSet):
         fields = ['status', 'assigned_to']
 
     labels_query = Label.objects.values_list('id', 'name')
-    labels = ChoiceFilter(label=_('Labels'),
+    labels = ChoiceFilter(label=_('Label'),
                           choices=labels_query)
     self_tasks = BooleanFilter(label=_('Current user`s tasks'),
                                widget=forms.CheckboxInput,

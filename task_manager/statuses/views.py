@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 from django.views import View
 from django.contrib import messages
@@ -10,21 +10,21 @@ from .models import Status
 from django.db.models import ProtectedError
 
 
-MSG_NO_PERMISSION = 'You are not authorized! Please sign in'
-MSG_STATUS_CREATED = 'Status successfully created'
-MSG_STATUS_UPDATED = 'Status successfully updated'
-MSG_STATUS_DELETED = 'Status successfully deleted'
-PROTECTED_STATUS_MSG = 'Can\'t delete status because it used'
+MSG_NO_PERMISSION = _('You are not authorized! Please sign in')
+MSG_STATUS_CREATED = _('Status successfully created')
+MSG_STATUS_UPDATED = _('Status successfully updated')
+MSG_STATUS_DELETED = _('Status successfully deleted')
+PROTECTED_STATUS_MSG = _('Can\'t delete status because it used')
 
-CONTEXT_CREATE = {'page_description': gettext_lazy('Status creating page'),
-                  'page_title': gettext_lazy('Create status'),
-                  'page_h1': gettext_lazy('Create status'),
-                  'page_btn_name': gettext_lazy('Create')
+CONTEXT_CREATE = {'page_description': _('Status creating page'),
+                  'page_title': _('Create status'),
+                  'page_h1': _('Create status'),
+                  'page_btn_name': _('Create')
                   }
-CONTEXT_UPDATE = {'page_description': gettext_lazy('Status updating page'),
-                  'page_title': gettext_lazy('Update status'),
-                  'page_h1': gettext_lazy('Status updating'),
-                  'page_btn_name': gettext_lazy('Change')
+CONTEXT_UPDATE = {'page_description': _('Status updating page'),
+                  'page_title': _('Update status'),
+                  'page_h1': _('Status updating'),
+                  'page_btn_name': _('Change')
                   }
 
 
@@ -82,7 +82,6 @@ class StatusDeleteView(CustomLoginRequiredMixin,
                        DeleteView
                        ):
     model = Status
-    extra_context = CONTEXT_CREATE
     success_url = reverse_lazy('status_list')
     template_name = 'statuses/delete_status.html'
     success_message = MSG_STATUS_DELETED
