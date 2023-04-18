@@ -341,7 +341,7 @@ msgstr "Страница изменения задачи"
 
 #: task_manager/tasks/views.py:23 task_manager/tasks/views.py:24
 msgid "Update task"
-msgstr "Изменить задачу"
+msgstr "Изменение задачи"
 
 #: task_manager/tasks/views.py:27
 msgid "task detail page"
