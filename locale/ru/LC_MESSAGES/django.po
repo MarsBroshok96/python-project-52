@@ -204,7 +204,6 @@ msgid "Create status"
 msgstr "Создать статус"
 
 #: task_manager/statuses/templates/statuses/status_list.html:37
-#, fuzzy
 msgid "No statuses yet"
 msgstr "Нет статусов"
 

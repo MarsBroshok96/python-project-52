@@ -23,5 +23,5 @@ class TaskFilter(FilterSet):
     def get_self_tasks(self, queryset, name, value):
         """Return tasks assigned to current user."""
         if value:
-            return queryset.filter(assigned_to=self.request.user)
+            return queryset.filter(created_by=self.request.user)
         return queryset
