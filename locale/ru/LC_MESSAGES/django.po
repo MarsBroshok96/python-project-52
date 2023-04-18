@@ -478,7 +478,7 @@ msgstr "Регистрация"
 
 #: task_manager/users/templates/users/register.html:14
 msgid "SignUp"
-msgstr "Зарегистрироваться"
+msgstr "Зарегистрировать"
 
 #: task_manager/users/templates/users/update.html:5
 msgid "Update user page"
