@@ -3,9 +3,13 @@ from task_manager.tests.factories import UserFactory, LabelFactory, TaskFactory
 from task_manager.labels.models import Label
 from django.contrib.messages import get_messages
 from django.urls import reverse
+from faker import Faker
+from django.utils.translation import gettext_lazy as _
 
 
-params = {'name': 'Random status name'}
+fake = Faker()
+MSG_NOT_AUTH = _('You are not authorized! Please sign in')
+MSG_LABEL_PROTECTED_ERROR = _('Can\'t delete label because it used')
 
 
 class LabelTest(TestCase):
@@ -18,13 +22,15 @@ class LabelTest(TestCase):
         self.user = UserFactory()
         self.task = TaskFactory(labels=[self.label1, self.label2])
 
+        self.params = {'name': fake.word()}
+
     def test_label_list_view(self):
         response = self.client.get(reverse('label_list'))
         self.assertRedirects(response, reverse('login'))
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]),
-                         'You are not authorized! Please sign in'
+                         MSG_NOT_AUTH
                          )
 
         self.client.force_login(self.user)
@@ -46,9 +52,9 @@ class LabelTest(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse('label_create'))
         self.assertTemplateUsed(response, 'labels/form_label.html')
-        response = self.client.post(reverse('label_create'), data=params)
+        response = self.client.post(reverse('label_create'), data=self.params)
         self.assertRedirects(response, reverse('label_list'))
-        new_label = Label.objects.filter(name=params['name'])
+        new_label = Label.objects.filter(name=self.params['name'])
         self.assertTrue(new_label.exists())
 
     def test_label_update(self):
@@ -57,11 +63,11 @@ class LabelTest(TestCase):
         self.assertTrue(label1.exists())
         response = self.client.post(reverse('label_update',
                                             args=[self.label1.id]),
-                                    data=params)
+                                    data=self.params)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('label_list'))
         self.label1.refresh_from_db()
-        self.assertEqual(self.label1.name, params['name'])
+        self.assertEqual(self.label1.name, self.params['name'])
 
     def test_label_delete(self):
         self.client.force_login(self.user)
@@ -69,7 +75,6 @@ class LabelTest(TestCase):
         self.assertContains(response, self.label3.name)
         response = self.client.post(reverse('label_delete',
                                             args=[self.label3.id]))
-        self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('label_list'))
         response = self.client.get(reverse('label_list'))
         self.assertNotContains(response, self.label3.name)
@@ -84,5 +89,5 @@ class LabelTest(TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]),
-                         'Can\'t delete label because it used'
+                         MSG_LABEL_PROTECTED_ERROR
                          )

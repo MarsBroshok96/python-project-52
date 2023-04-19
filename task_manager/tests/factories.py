@@ -1,8 +1,11 @@
 import factory
-from task_manager.users.models import User
+from django.contrib.auth import get_user_model
 from task_manager.statuses.models import Status
 from task_manager.tasks.models import Task
 from task_manager.labels.models import Label
+
+
+User = get_user_model()
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -50,7 +53,7 @@ class TaskFactory(factory.django.DjangoModelFactory):
                                 )
     status = factory.SubFactory(StatusFactory)
     created_by = factory.SubFactory(UserFactory)
-    assigned_to = factory.SubFactory(UserFactory)
+    executor = factory.SubFactory(UserFactory)
 
     @factory.post_generation
     def labels(self, create, extracted, **kwargs):

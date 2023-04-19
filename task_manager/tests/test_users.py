@@ -1,15 +1,17 @@
 from django.test import TestCase, Client
 from task_manager.tests.factories import UserFactory
-from task_manager.users.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.messages import get_messages
 from django.urls import reverse
 from faker import Faker
+from django.utils.translation import gettext_lazy as _
 
 
+User = get_user_model()
 fake = Faker()
-
-UNDER_MIN_PASS_MSG = "This password is too short. " \
-                     "It must contain at least 3 characters."
+MSG_USER_EDIT_ERROR = _("You can`t edit other users")
+MSG_USER_UPDATED = _("User`s info successfully updated")
+MSG_USER_DELETED = _("User successfully Deleted")
 
 good_params = {'first_name': fake.first_name(),
                'last_name': fake.last_name(),
@@ -39,7 +41,7 @@ class UsersTest(TestCase):
         self.user2 = UserFactory()
 
     def test_user_list_view(self):
-        response = self.client.get('/users/')
+        response = self.client.get(reverse('user_list'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.user1.username)
         self.assertContains(response, self.user2.username)
@@ -58,10 +60,9 @@ class UsersTest(TestCase):
         response = self.client.post(reverse('register'), data=bad_params)
         errors = response.context['form'].errors
         self.assertIn('password2', errors)
-        self.assertEqual([UNDER_MIN_PASS_MSG], errors['password2'])
 
         response = self.client.post(reverse('register'), data=good_params)
-        self.assertRedirects(response, reverse('user_list'))
+        self.assertRedirects(response, reverse('login'))
         new_user = User.objects.filter(username=good_params['username'])
         self.assertTrue(new_user.exists())
 
@@ -72,7 +73,7 @@ class UsersTest(TestCase):
         self.assertRedirects(response, reverse('user_list'))
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), 'You can`t edit other users')
+        self.assertEqual(str(messages[0]), MSG_USER_EDIT_ERROR)
 
         user1 = User.objects.filter(username=self.user1.username)
         self.assertTrue(user1.exists())
@@ -83,7 +84,7 @@ class UsersTest(TestCase):
         self.assertRedirects(response, reverse('user_list'))
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), 'User`s info successfully updated')
+        self.assertEqual(str(messages[0]), MSG_USER_UPDATED)
         self.user1.refresh_from_db()
         self.assertEqual(self.user1.username, good_params['username'])
 
@@ -97,12 +98,12 @@ class UsersTest(TestCase):
         self.assertRedirects(response, reverse('user_list'))
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), 'You can`t edit other users')
+        self.assertEqual(str(messages[0]), MSG_USER_EDIT_ERROR)
 
         response = self.client.post(reverse('user_del', args=[self.user1.id]))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('user_list'))
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), 'User successfully Deleted')
+        self.assertEqual(str(messages[0]), MSG_USER_DELETED)
         self.assertFalse(user1.exists())

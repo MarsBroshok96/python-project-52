@@ -3,6 +3,14 @@ from task_manager.tests.factories import UserFactory, TaskFactory, StatusFactory
 from task_manager.tasks.models import Task
 from django.contrib.messages import get_messages
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
+from faker import Faker
+
+
+fake = Faker()
+MSG_NOT_AUTH = _('You are not authorized! Please sign in')
+MSG_DELETE_PERMISSION_ERROR = _('You have no permission to delete this task')
+MSG_USER_PROTECTED_ERROR = _('Can\'t delete user because it used')
 
 
 class TaskTest(TestCase):
@@ -13,9 +21,20 @@ class TaskTest(TestCase):
         self.user2 = UserFactory()
         self.status1 = StatusFactory()
         self.task1 = TaskFactory(created_by=self.user1,
-                                 assigned_to=self.user1,
+                                 executor=self.user1,
                                  status=self.status1)
         self.task2 = TaskFactory()
+        self.good_params = {'name': fake.word(),
+                            'description': fake.text(max_nb_chars=50),
+                            'status': self.status1.id,
+                            'executor': self.user1.id,
+                            }
+
+        self.bad_params = {'name': fake.word(),
+                           'description': fake.text(max_nb_chars=50),
+                           'status': fake.word(),
+                           'executor': fake.name(),
+                           }
 
     def test_task_list_view(self):
         response = self.client.get(reverse('task_list'))
@@ -23,7 +42,7 @@ class TaskTest(TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]),
-                         'You are not authorized! Please sign in'
+                         MSG_NOT_AUTH
                          )
         self.client.force_login(self.user1)
         response = self.client.get(reverse('task_list'))
@@ -48,10 +67,10 @@ class TaskTest(TestCase):
         self.assertContains(response, self.task1.name)
         self.assertNotContains(response, self.task2.name)
 
-    def test_filter_tasks_by_assigned_to(self):
+    def test_filter_tasks_by_executor(self):
         self.client.force_login(self.user1)
         response = self.client.get(reverse('task_list'),
-                                   data={'assigned_to': self.user1.id})
+                                   data={'executor': self.user1.id})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.task1.name)
         self.assertNotContains(response, self.task2.name)
@@ -65,65 +84,44 @@ class TaskTest(TestCase):
         self.assertNotContains(response, self.task2.name)
 
     def test_create_task(self):
-        good_params = {'name': 'Random task name',
-                       'description': 'Random task description',
-                       'status': self.status1.id,
-                       'assigned_to': self.user1.id,
-                       }
-
-        bad_params = {'name': 'Random task name',
-                      'description': 'Random task description',
-                      'status': 'not existing status',
-                      'assigned_to': 'not existing user',
-                      }
-
         self.client.force_login(self.user1)
         response = self.client.get(reverse('task_create'))
         self.assertTemplateUsed(response, 'tasks/task_form.html')
-        response = self.client.post(reverse('task_create'), data=bad_params)
+        response = self.client.post(reverse('task_create'),
+                                    data=self.bad_params)
         errors = response.context['form'].errors
         self.assertIn('status', errors)
-        self.assertIn('assigned_to', errors)
+        self.assertIn('executor', errors)
 
-        response = self.client.post(reverse('task_create'), data=good_params)
+        response = self.client.post(reverse('task_create'),
+                                    data=self.good_params)
         self.assertRedirects(response, reverse('task_list'))
         response = self.client.get(reverse('task_list'))
-        self.assertContains(response, good_params['name'])
+        self.assertContains(response, self.good_params['name'])
 
     def test_task_update(self):
-        good_params = {'name': 'New task name',
-                       'description': 'New task description',
-                       'status': self.status1.id,
-                       'assigned_to': self.user1.id,
-                       }
-
-        bad_params = {'name': 'New task name',
-                      'description': 'New task description',
-                      'status': 'not existing status',
-                      'assigned_to': 'not existing user',
-                      }
 
         self.client.force_login(self.user1)
         task1 = Task.objects.filter(name=self.task1.name)
         self.assertTrue(task1.exists())
         response = self.client.post(reverse('task_update',
                                             args=[self.task1.id]),
-                                    data=bad_params)
+                                    data=self.bad_params)
         errors = response.context['form'].errors
         self.assertIn('status', errors)
-        self.assertIn('assigned_to', errors)
+        self.assertIn('executor', errors)
 
         response = self.client.post(reverse('task_update',
                                             args=[self.task1.id]),
-                                    data=good_params)
+                                    data=self.good_params)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('task_list'))
 
         self.assertEqual(Task.objects.get(id=self.task1.id).name,
-                         good_params['name']
+                         self.good_params['name']
                          )
         response = self.client.get(reverse('task_list'))
-        self.assertContains(response, good_params['name'])
+        self.assertContains(response, self.good_params['name'])
 
     def test_task_delete(self):
         "test that task can be deleted only by its creator"
@@ -137,7 +135,7 @@ class TaskTest(TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]),
-                         'You have no permission to delete this task'
+                         MSG_DELETE_PERMISSION_ERROR
                          )
         response = self.client.get(reverse('task_list'))
         self.assertContains(response, self.task1.name)
@@ -157,8 +155,8 @@ class TaskTest(TestCase):
         self.assertContains(response, self.task1.name)
         self.assertContains(response, self.task1.description)
         self.assertContains(response, self.task1.status.name)
-        self.assertContains(response, self.task1.created_by.username)
-        self.assertContains(response, self.task1.assigned_to.username)
+        self.assertContains(response, self.task1.created_by)
+        self.assertContains(response, self.task1.executor)
 
     def test_user_with_task_protected(self):
         "user related to task can't be deleted"
@@ -168,7 +166,7 @@ class TaskTest(TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]),
-                         'Can\'t delete user because it used'
+                         MSG_USER_PROTECTED_ERROR
                          )
         response = self.client.get(reverse('user_list'))
         self.assertContains(response, self.user1.username)
