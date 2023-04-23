@@ -1,3 +1,4 @@
+"""Factories for creating test data."""
 import factory
 from django.contrib.auth import get_user_model
 from task_manager.statuses.models import Status
@@ -9,6 +10,7 @@ User = get_user_model()
 
 
 class UserFactory(factory.django.DjangoModelFactory):
+    """A factory for creating users."""
     class Meta:
         model = User
         django_get_or_create = ('first_name', 'last_name', 'username',
@@ -22,6 +24,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 
 
 class StatusFactory(factory.django.DjangoModelFactory):
+    """A factory for creating statuses."""
     class Meta:
         model = Status
         django_get_or_create = ('name',)
@@ -33,6 +36,7 @@ class StatusFactory(factory.django.DjangoModelFactory):
 
 
 class LabelFactory(factory.django.DjangoModelFactory):
+    """A factory for creating labels."""
     class Meta:
         model = Label
         django_get_or_create = ('name',)
@@ -41,6 +45,7 @@ class LabelFactory(factory.django.DjangoModelFactory):
 
 
 class TaskFactory(factory.django.DjangoModelFactory):
+    """A factory for creating tasks."""
     class Meta:
         model = Task
 

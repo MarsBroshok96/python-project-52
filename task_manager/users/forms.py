@@ -15,6 +15,7 @@ MSG_REGISTERED = _('User successfully registered')
 
 
 class SignUpForm(UserCreationForm):
+    "User registration form"
     email = forms.EmailField(max_length=255, required=False,
                              help_text=EMAIL_HELP_TEXT)
     first_name = forms.CharField(required=True, max_length=30,

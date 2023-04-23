@@ -4,10 +4,10 @@ from . import views
 urlpatterns = [
     path('', views.UsersListView.as_view(), name='user_list'),
     path('create/', views.SignUpView.as_view(), name='register'),
-    path('<int:id>/update/',
+    path('<int:pk>/update/',
          views.UserUpdateView.as_view(),
          name='user_update'),
-    path('<int:id>/delete/',
+    path('<int:pk>/delete/',
          views.UserDeleteView.as_view(),
          name='user_del'),
 ]

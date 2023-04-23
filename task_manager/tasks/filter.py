@@ -8,7 +8,7 @@ from task_manager.labels.models import Label
 
 
 class TaskFilter(FilterSet):
-    """Define filters for tasks list."""
+    """Filters for tasks list."""
     class Meta:
         model = Task
         fields = ['status', 'executor']

@@ -1,3 +1,4 @@
+"""Test labels app"""
 from django.test import TestCase, Client
 from task_manager.tests.factories import UserFactory, LabelFactory, TaskFactory
 from task_manager.labels.models import Label
@@ -25,6 +26,7 @@ class LabelTest(TestCase):
         self.params = {'name': fake.word()}
 
     def test_label_list_view(self):
+        """Test label list view"""
         response = self.client.get(reverse('label_list'))
         self.assertRedirects(response, reverse('login'))
         messages = list(get_messages(response.wsgi_request))
@@ -40,6 +42,7 @@ class LabelTest(TestCase):
         self.assertContains(response, self.label2.name)
 
     def test_label_list_view_has_update_and_delete_link(self):
+        """Test label list view has update and delete link"""
         self.client.force_login(self.user)
         response = self.client.get(reverse('label_list'))
         self.assertEqual(response.status_code, 200)
@@ -49,6 +52,7 @@ class LabelTest(TestCase):
                                               args=[self.label1.id]))
 
     def test_create_label(self):
+        """Test create label"""
         self.client.force_login(self.user)
         response = self.client.get(reverse('label_create'))
         self.assertTemplateUsed(response, 'labels/form_label.html')
@@ -58,6 +62,7 @@ class LabelTest(TestCase):
         self.assertTrue(new_label.exists())
 
     def test_label_update(self):
+        "Test label update"
         self.client.force_login(self.user)
         label1 = Label.objects.filter(name=self.label1.name)
         self.assertTrue(label1.exists())
@@ -70,6 +75,7 @@ class LabelTest(TestCase):
         self.assertEqual(self.label1.name, self.params['name'])
 
     def test_label_delete(self):
+        "Test label delete"
         self.client.force_login(self.user)
         response = self.client.get(reverse('label_list'))
         self.assertContains(response, self.label3.name)
@@ -80,7 +86,7 @@ class LabelTest(TestCase):
         self.assertNotContains(response, self.label3.name)
 
     def test_label_on_task_protected(self):
-        "label related to task can't be deleted"
+        "Test that label related to task can't be deleted"
         self.client.force_login(self.user)
         response = self.client.post(reverse('label_delete',
                                             args=[self.label1.id]))

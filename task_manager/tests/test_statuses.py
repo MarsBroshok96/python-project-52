@@ -1,3 +1,4 @@
+"""Test for statuses app"""
 from django.test import TestCase, Client
 from task_manager.tests.factories import UserFactory, StatusFactory
 from task_manager.statuses.models import Status
@@ -24,6 +25,7 @@ class StatusTest(TestCase):
         self.params = {'name': fake.word()}
 
     def test_status_list_view(self):
+        """Test status list view"""
         response = self.client.get('/statuses/')
         self.assertRedirects(response, reverse('login'))
         messages = list(get_messages(response.wsgi_request))
@@ -39,6 +41,7 @@ class StatusTest(TestCase):
         self.assertContains(response, self.status2.name)
 
     def test_status_list_view_has_update_and_delete_link(self):
+        """Test status list view has update and delete link"""
         self.client.force_login(self.user)
         response = self.client.get(reverse('status_list'))
         self.assertEqual(response.status_code, 200)
@@ -48,6 +51,7 @@ class StatusTest(TestCase):
                                               args=[self.status1.id]))
 
     def test_create_status(self):
+        """Test create status"""
         self.client.force_login(self.user)
         response = self.client.get(reverse('create_status'))
         self.assertTemplateUsed(response, 'statuses/form_status.html')
@@ -57,6 +61,7 @@ class StatusTest(TestCase):
         self.assertTrue(new_status.exists())
 
     def test_status_update(self):
+        """Test update status"""
         self.client.force_login(self.user)
         status1 = Status.objects.filter(name=self.status1.name)
         self.assertTrue(status1.exists())
@@ -72,6 +77,7 @@ class StatusTest(TestCase):
         self.assertEqual(self.status1.name, self.params['name'])
 
     def test_status_delete(self):
+        """Test delete status"""
         self.client.force_login(self.user)
         status2 = Status.objects.filter(name=self.status2.name)
         self.assertTrue(status2.exists())

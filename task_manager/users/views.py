@@ -1,14 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
-from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DeleteView, UpdateView
 from django.contrib.auth import get_user_model
 from .forms import SignUpForm
-from django.db.models import ProtectedError
 from django.utils.translation import gettext_lazy as _
+from task_manager.mixins import CustomLoginRequiredMixin, DeleteProtectionMixin
+
 
 User = get_user_model()
 
@@ -20,22 +19,8 @@ MSG_DELETED = _('User successfully Deleted')
 MSG_PROTECTED_USER = _('Can\'t delete user because it used')
 
 
-# Create your views here.
-class CustomLoginRequiredMixin(LoginRequiredMixin):
-
-    no_permission_message = MSG_NO_PERMISSION
-    login_url = 'login'
-    redirect_field_name = ''
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.error(self.request, self.no_permission_message)
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
-
-
 class UsersListView(View):
-
+    "Users list view"
     def get(self, request, *args, **kwargs):
         users = User.objects.all()[:15]
         return render(request, 'users/user_list.html', context={
@@ -44,65 +29,43 @@ class UsersListView(View):
 
 
 class SignUpView(SuccessMessageMixin, CreateView):
+    "User registration view"
     form_class = SignUpForm
     success_url = reverse_lazy('login')
     template_name = 'users/register.html'
     success_message = MSG_REGISTERED
 
 
-class UserUpdateView(CustomLoginRequiredMixin, View):
+class UserUpdateView(CustomLoginRequiredMixin,
+                     SuccessMessageMixin,
+                     UpdateView):
+    "User info update view"
+    model = User
+    form_class = SignUpForm
+    success_message = MSG_UPDATED
+    success_url = reverse_lazy('user_list')
+    not_modify_permission_url = reverse_lazy('user_list')
     template_name = 'users/update.html'
 
-    def get(self, request, *args, **kwargs):
-        user_id = kwargs.get('id')
-        user = get_object_or_404(User, pk=user_id)
-        if request.user != user:
-            messages.error(request, MSG_EDIT_ERROR)
-            return redirect('user_list')
-
-        form = SignUpForm(instance=user)
-        return render(request, self.template_name, {
-            'form': form,
-            'user_id': user_id})
-
-    def post(self, request, *args, **kwargs):
-        user_id = kwargs.get('id')
-        user = get_object_or_404(User, pk=user_id)
-        if request.user != user:
-            return redirect('login')
-
-        form = SignUpForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, MSG_UPDATED)
-            return redirect('user_list')
-
-        return render(request, self.template_name, {
-            'form': form,
-            'user_id': user_id})
+    owner_modify_permission = True
+    owner_related_field = None
+    no_modify_permission_message = MSG_EDIT_ERROR
 
 
-class UserDeleteView(CustomLoginRequiredMixin, View):
+class UserDeleteView(CustomLoginRequiredMixin,
+                     SuccessMessageMixin,
+                     DeleteProtectionMixin,
+                     DeleteView):
+    "User delete view"
+    model = User
+
+    success_url = reverse_lazy('user_list')
+    not_modify_permission_url = reverse_lazy('user_list')
+    protected_data_url = reverse_lazy('user_list')
     template_name = 'users/delete.html'
+    success_message = MSG_DELETED
+    protected_data_msg = MSG_PROTECTED_USER
 
-    def get(self, request, *args, **kwargs):
-        user_id = kwargs.get('id')
-        user = get_object_or_404(User, pk=user_id)
-        if request.user != user:
-            messages.error(request, MSG_EDIT_ERROR)
-            return redirect('user_list')
-
-        return render(request, self.template_name, {'user': user})
-
-    def post(self, request, *args, **kwargs):
-        user_id = kwargs.get('id')
-        user = get_object_or_404(User, pk=user_id)
-        if request.user != user:
-            return redirect('login')
-        try:
-            user.delete()
-            messages.success(request, MSG_DELETED)
-            return redirect('user_list')
-        except ProtectedError:
-            messages.error(request, MSG_PROTECTED_USER)
-            return redirect('user_list')
+    owner_modify_permission = True
+    owner_related_field = None
+    no_modify_permission_message = MSG_EDIT_ERROR

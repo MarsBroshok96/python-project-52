@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-19 23:39+0600\n"
+"POT-Creation-Date: 2023-04-23 15:48+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,25 +20,34 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: task_manager/labels/models.py:18
+#: task_manager/general_models.py:9
+#, fuzzy
+msgid "created at"
+msgstr "Дата создания"
+
+#: task_manager/general_models.py:12
+msgid "modified at"
+msgstr "Дата обновления"
+
+#: task_manager/labels/models.py:10
 #: task_manager/labels/templates/labels/label_list.html:18
 #: task_manager/statuses/templates/statuses/status_list.html:18
-#: task_manager/tasks/models.py:23
+#: task_manager/tasks/models.py:15
 #: task_manager/tasks/templates/tasks/task_list.html:26
 msgid "Name"
 msgstr "Имя"
 
-#: task_manager/labels/models.py:20
+#: task_manager/labels/models.py:12
 msgid "Name is required"
 msgstr "Название метки обязательно"
 
-#: task_manager/labels/models.py:29 task_manager/tasks/filter.py:17
+#: task_manager/labels/models.py:21 task_manager/tasks/filter.py:17
 msgid "Label"
 msgstr "Метка"
 
-#: task_manager/labels/models.py:30
+#: task_manager/labels/models.py:22
 #: task_manager/labels/templates/labels/label_list.html:7
-#: task_manager/tasks/models.py:58 task_manager/templates/base.html:30
+#: task_manager/tasks/models.py:50 task_manager/templates/base.html:30
 msgid "Labels"
 msgstr "Метки"
 
@@ -76,7 +85,7 @@ msgid "Label list"
 msgstr "Список Меток"
 
 #: task_manager/labels/templates/labels/label_list.html:11
-#: task_manager/labels/views.py:17 task_manager/labels/views.py:18
+#: task_manager/labels/views.py:14 task_manager/labels/views.py:15
 msgid "Create label"
 msgstr "Создать метку"
 
@@ -88,11 +97,11 @@ msgid "Created at"
 msgstr "Дата создания"
 
 #: task_manager/labels/templates/labels/label_list.html:30
-#: task_manager/labels/views.py:24
+#: task_manager/labels/views.py:21
 #: task_manager/statuses/templates/statuses/status_list.html:30
 #: task_manager/tasks/templates/tasks/task_detail.html:48
 #: task_manager/tasks/templates/tasks/task_list.html:46
-#: task_manager/tasks/views.py:25
+#: task_manager/tasks/views.py:22
 #: task_manager/users/templates/users/update.html:14
 #: task_manager/users/templates/users/user_list.html:27
 msgid "Update"
@@ -110,66 +119,60 @@ msgstr "Удалить"
 msgid "No labels yet"
 msgstr "Нет меток"
 
-#: task_manager/labels/views.py:13 task_manager/statuses/views.py:13
-#: task_manager/tasks/views.py:14 task_manager/tests/test_labels.py:11
-#: task_manager/tests/test_statuses.py:11 task_manager/tests/test_tasks.py:11
-#: task_manager/users/views.py:18
-msgid "You are not authorized! Please sign in"
-msgstr "Вы не авторизованы! Пожалуйста, войдите в аккаунт"
-
-#: task_manager/labels/views.py:14
+#: task_manager/labels/views.py:11
 msgid "Label was deleted successfully"
 msgstr "Метка успешно удалена"
 
-#: task_manager/labels/views.py:15 task_manager/tests/test_labels.py:12
+#: task_manager/labels/views.py:12 task_manager/tests/test_labels.py:13
 msgid "Can't delete label because it used"
 msgstr "Невозможно удалить метку, потому что она используется"
 
-#: task_manager/labels/views.py:16
+#: task_manager/labels/views.py:13
 msgid "label creating page"
 msgstr "Страница создания метки"
 
-#: task_manager/labels/views.py:19 task_manager/statuses/views.py:22
-#: task_manager/tasks/views.py:20
+#: task_manager/labels/views.py:16 task_manager/statuses/views.py:19
+#: task_manager/tasks/views.py:17
 msgid "Create"
 msgstr "Создать"
 
-#: task_manager/labels/views.py:21
+#: task_manager/labels/views.py:18
 msgid "label updating page"
 msgstr "Страница обновления метки"
 
-#: task_manager/labels/views.py:22 task_manager/labels/views.py:23
+#: task_manager/labels/views.py:19 task_manager/labels/views.py:20
 msgid "Update label"
 msgstr "Изменение метки"
 
-#: task_manager/labels/views.py:59
+#: task_manager/labels/views.py:44
 msgid "Label was created successfully"
 msgstr "Метка успешно создана"
 
-#: task_manager/labels/views.py:71
+#: task_manager/labels/views.py:56
 msgid "Label was updated successfully"
 msgstr "Метка успешно изменена"
 
-#: task_manager/statuses/models.py:9
-#, fuzzy
-msgid "created at"
-msgstr "Дата создания"
+#: task_manager/mixins.py:9 task_manager/tests/test_labels.py:12
+#: task_manager/tests/test_statuses.py:12 task_manager/tests/test_tasks.py:12
+#: task_manager/users/views.py:17
+msgid "You are not authorized! Please sign in"
+msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
 
-#: task_manager/statuses/models.py:12
-msgid "modified at"
-msgstr "Дата обновления"
+#: task_manager/mixins.py:10
+msgid "Can't delete because it used"
+msgstr "Невозможно удалить, потому что используется"
 
-#: task_manager/statuses/models.py:20
+#: task_manager/statuses/models.py:8
 #, fuzzy
 msgid "name"
 msgstr "Имя"
 
-#: task_manager/statuses/models.py:27
+#: task_manager/statuses/models.py:15
 #, fuzzy
 msgid "status"
 msgstr "статус"
 
-#: task_manager/statuses/models.py:28
+#: task_manager/statuses/models.py:16
 #, fuzzy
 #| msgid "Statuses"
 msgid "statuses"
@@ -201,7 +204,7 @@ msgid "Statuses"
 msgstr "Статусы"
 
 #: task_manager/statuses/templates/statuses/status_list.html:11
-#: task_manager/statuses/views.py:20 task_manager/statuses/views.py:21
+#: task_manager/statuses/views.py:17 task_manager/statuses/views.py:18
 msgid "Create status"
 msgstr "Создать статус"
 
@@ -209,39 +212,39 @@ msgstr "Создать статус"
 msgid "No statuses yet"
 msgstr "Нет статусов"
 
-#: task_manager/statuses/views.py:14
+#: task_manager/statuses/views.py:11
 msgid "Status successfully created"
 msgstr "Статус успешно создан"
 
-#: task_manager/statuses/views.py:15 task_manager/tests/test_statuses.py:12
+#: task_manager/statuses/views.py:12 task_manager/tests/test_statuses.py:13
 msgid "Status successfully updated"
 msgstr "Статус успешно изменён"
 
-#: task_manager/statuses/views.py:16 task_manager/tests/test_statuses.py:13
+#: task_manager/statuses/views.py:13 task_manager/tests/test_statuses.py:14
 msgid "Status successfully deleted"
 msgstr "Статус успешно удалён"
 
-#: task_manager/statuses/views.py:17
+#: task_manager/statuses/views.py:14
 msgid "Can't delete status because it used"
 msgstr "Невозможно удалить статус, потому что он используется"
 
-#: task_manager/statuses/views.py:19
+#: task_manager/statuses/views.py:16
 msgid "Status creating page"
 msgstr "Страница создания статуса"
 
-#: task_manager/statuses/views.py:24
+#: task_manager/statuses/views.py:21
 msgid "Status updating page"
 msgstr "Страница обновления статуса"
 
-#: task_manager/statuses/views.py:25
+#: task_manager/statuses/views.py:22
 msgid "Update status"
 msgstr "Изменить статус"
 
-#: task_manager/statuses/views.py:26
+#: task_manager/statuses/views.py:23
 msgid "Status updating"
 msgstr "Изменение статуса"
 
-#: task_manager/statuses/views.py:27
+#: task_manager/statuses/views.py:24
 msgid "Change"
 msgstr "Изменить"
 
@@ -249,31 +252,31 @@ msgstr "Изменить"
 msgid "Current user`s tasks"
 msgstr "Только свои задачи"
 
-#: task_manager/tasks/models.py:25
+#: task_manager/tasks/models.py:17
 msgid "Task name is required"
 msgstr "Название задачи обязательно"
 
-#: task_manager/tasks/models.py:29
+#: task_manager/tasks/models.py:21
 msgid "Description"
 msgstr "Описание"
 
-#: task_manager/tasks/models.py:35
+#: task_manager/tasks/models.py:27
 #: task_manager/tasks/templates/tasks/task_detail.html:22
 #: task_manager/tasks/templates/tasks/task_list.html:29
 msgid "Executor"
 msgstr "Исполнитель"
 
-#: task_manager/tasks/models.py:45
+#: task_manager/tasks/models.py:37
 #: task_manager/tasks/templates/tasks/task_detail.html:26
 #: task_manager/tasks/templates/tasks/task_list.html:27
 msgid "Status"
 msgstr "Статус"
 
-#: task_manager/tasks/models.py:62
+#: task_manager/tasks/models.py:54
 msgid "Task"
 msgstr "Задача"
 
-#: task_manager/tasks/models.py:63
+#: task_manager/tasks/models.py:55
 #: task_manager/tasks/templates/tasks/task_list.html:8
 #: task_manager/templates/base.html:33
 msgid "Tasks"
@@ -313,7 +316,7 @@ msgid "Task list"
 msgstr "Список задач"
 
 #: task_manager/tasks/templates/tasks/task_list.html:11
-#: task_manager/tasks/views.py:18 task_manager/tasks/views.py:19
+#: task_manager/tasks/views.py:15 task_manager/tasks/views.py:16
 msgid "Create task"
 msgstr "Создать задачу"
 
@@ -325,49 +328,49 @@ msgstr "Показать"
 msgid "No tasks yet"
 msgstr "Нет задач"
 
-#: task_manager/tasks/views.py:15
+#: task_manager/tasks/views.py:11
 msgid "Task was deleted successfully"
 msgstr "Задача успешно удалена"
 
-#: task_manager/tasks/views.py:16 task_manager/tests/test_tasks.py:12
+#: task_manager/tasks/views.py:12 task_manager/tests/test_tasks.py:13
 msgid "You have no permission to delete this task"
 msgstr "Задачу может удалить только её автор"
 
-#: task_manager/tasks/views.py:17
+#: task_manager/tasks/views.py:13
+msgid "Can't delete task because it used"
+msgstr "Невозможно удалить задачу, потому что она используется"
+
+#: task_manager/tasks/views.py:14
 msgid "task creating page"
 msgstr "Страница создания задачи"
 
-#: task_manager/tasks/views.py:22
+#: task_manager/tasks/views.py:19
 msgid "task updating page"
 msgstr "Страница изменения задачи"
 
-#: task_manager/tasks/views.py:23 task_manager/tasks/views.py:24
+#: task_manager/tasks/views.py:20 task_manager/tasks/views.py:21
 msgid "Update task"
 msgstr "Изменение задачи"
 
-#: task_manager/tasks/views.py:27
+#: task_manager/tasks/views.py:24
 msgid "task detail page"
 msgstr "Страница с подробностями задачи"
 
-#: task_manager/tasks/views.py:28
+#: task_manager/tasks/views.py:25
 msgid "Detail task"
 msgstr "Подробности задачи"
 
-#: task_manager/tasks/views.py:29
+#: task_manager/tasks/views.py:26
 msgid "Task view"
 msgstr "Просмотр задачи"
 
-#: task_manager/tasks/views.py:57
+#: task_manager/tasks/views.py:42
 msgid "Task was created successfully"
 msgstr "Задача успешно создана"
 
-#: task_manager/tasks/views.py:71
+#: task_manager/tasks/views.py:56
 msgid "Task was updated successfully"
 msgstr "Задача успешно изменена"
-
-#: task_manager/tasks/views.py:96
-msgid "Task is protected"
-msgstr "Задача защищена"
 
 #: task_manager/templates/base.html:16 task_manager/templates/index.html:6
 msgid "Task manager"
@@ -420,19 +423,19 @@ msgstr "Войти в Менеджер задач"
 msgid "Log in."
 msgstr "Войти"
 
-#: task_manager/tests/test_tasks.py:13 task_manager/users/views.py:20
+#: task_manager/tests/test_tasks.py:14 task_manager/users/views.py:19
 msgid "Can't delete user because it used"
 msgstr "Невозможно удалить пользователя, потому что он используется"
 
-#: task_manager/tests/test_users.py:12 task_manager/users/views.py:17
+#: task_manager/tests/test_users.py:13 task_manager/users/views.py:16
 msgid "You can`t edit other users"
 msgstr "У вас нет прав для изменения другого пользователя."
 
-#: task_manager/tests/test_users.py:13 task_manager/users/views.py:16
+#: task_manager/tests/test_users.py:14 task_manager/users/views.py:15
 msgid "User`s info successfully updated"
 msgstr "Пользователь успешно изменён"
 
-#: task_manager/tests/test_users.py:14 task_manager/users/views.py:19
+#: task_manager/tests/test_users.py:15 task_manager/users/views.py:18
 msgid "User successfully Deleted"
 msgstr "Пользователь успешно удалён"
 
@@ -452,7 +455,7 @@ msgstr "Введите корректный email адрес"
 msgid "Required. Not more than 30 symbols"
 msgstr "Обязательное поле. Не более 30 символов."
 
-#: task_manager/users/forms.py:14 task_manager/users/views.py:15
+#: task_manager/users/forms.py:14 task_manager/users/views.py:14
 msgid "User successfully registered"
 msgstr "Пользователь успешно зарегистрирован"
 
@@ -537,3 +540,9 @@ msgstr "Вы залогинены"
 #: task_manager/views.py:8
 msgid "You are logged out"
 msgstr "Вы разлогинены"
+
+#~ msgid "owner_field is required"
+#~ msgstr "owner_field обязательно к заполнению"
+
+#~ msgid "Task is protected"
+#~ msgstr "Задача защищена"

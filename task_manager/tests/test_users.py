@@ -1,3 +1,4 @@
+"""Test for users views"""
 from django.test import TestCase, Client
 from task_manager.tests.factories import UserFactory
 from django.contrib.auth import get_user_model
@@ -41,12 +42,14 @@ class UsersTest(TestCase):
         self.user2 = UserFactory()
 
     def test_user_list_view(self):
+        """Test user list view"""
         response = self.client.get(reverse('user_list'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.user1.username)
         self.assertContains(response, self.user2.username)
 
     def test_user_list_view_has_update_and_delete_link(self):
+        """Test user list view has update and delete link"""
         response = self.client.get(reverse('user_list'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, reverse('user_del',
@@ -55,6 +58,7 @@ class UsersTest(TestCase):
                                               args=[self.user1.id]))
 
     def test_create_user(self):
+        """Test create user view"""
         response = self.client.get(reverse('register'))
         self.assertTemplateUsed(response, 'users/register.html')
         response = self.client.post(reverse('register'), data=bad_params)
@@ -67,6 +71,7 @@ class UsersTest(TestCase):
         self.assertTrue(new_user.exists())
 
     def test_user_update(self):
+        """Test user update view"""
         self.client.force_login(self.user1)
         response = self.client.get(reverse('user_update', args=[self.user2.id]))
         self.assertEqual(response.status_code, 302)
@@ -89,6 +94,7 @@ class UsersTest(TestCase):
         self.assertEqual(self.user1.username, good_params['username'])
 
     def test_user_delete(self):
+        """Test user delete view"""
         self.client.force_login(self.user1)
         user1 = User.objects.filter(username=self.user1.username)
         self.assertTrue(user1.exists())

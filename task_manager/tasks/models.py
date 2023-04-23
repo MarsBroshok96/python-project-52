@@ -3,18 +3,10 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from task_manager.statuses.models import Status
 from task_manager.labels.models import Label
+from task_manager.general_models import TimestampedModel
 
 
 User = get_user_model()
-
-
-class TimestampedModel(models.Model):
-    """An abstract model with a pair of timestamps."""
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
 
 
 class Task(TimestampedModel):

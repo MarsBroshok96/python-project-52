@@ -1,16 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
-from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Label
-from django.db.models import ProtectedError
 from django.utils.translation import gettext_lazy as _
+from task_manager.mixins import CustomLoginRequiredMixin, DeleteProtectionMixin
 
 
-MSG_NO_PERMISSION = _('You are not authorized! Please sign in')
 MSG_LABEL_DELETED = _('Label was deleted successfully')
 PROTECTED_LABEL_MSG = _('Can\'t delete label because it used')
 CONTEXT_CREATE = {'page_description': _('label creating page'),
@@ -25,20 +22,8 @@ CONTEXT_UPDATE = {'page_description': _('label updating page'),
                   }
 
 
-class CustomLoginRequiredMixin(LoginRequiredMixin):
-
-    no_permission_message = MSG_NO_PERMISSION
-    login_url = 'login'
-    redirect_field_name = ''
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.error(self.request, self.no_permission_message)
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
-
-
 class LabelListView(CustomLoginRequiredMixin, View):
+    "Label list view"
     template_name = 'labels/label_list.html'
 
     def get(self, request, *args, **kwargs):
@@ -52,7 +37,7 @@ class LabelListView(CustomLoginRequiredMixin, View):
 class LabelCreateView(CustomLoginRequiredMixin,
                       SuccessMessageMixin,
                       CreateView):
-
+    "Create label view"
     model = Label
     fields = ['name']
     success_url = reverse_lazy('label_list')
@@ -64,7 +49,7 @@ class LabelCreateView(CustomLoginRequiredMixin,
 class LabelUpdateView(CustomLoginRequiredMixin,
                       SuccessMessageMixin,
                       UpdateView):
-
+    "Update label view"
     model = Label
     fields = ['name']
     success_url = reverse_lazy('label_list')
@@ -75,18 +60,12 @@ class LabelUpdateView(CustomLoginRequiredMixin,
 
 class LabelDeleteView(CustomLoginRequiredMixin,
                       SuccessMessageMixin,
+                      DeleteProtectionMixin,
                       DeleteView):
-
+    "Delete label view"
     model = Label
     success_url = reverse_lazy('label_list')
     template_name = 'labels/label_confirm_delete.html'
     success_message = MSG_LABEL_DELETED
     protected_data_url = reverse_lazy('label_list')
     protected_data_msg = PROTECTED_LABEL_MSG
-
-    def post(self, request, *args, **kwargs):
-        try:
-            return super().post(request, *args, **kwargs)
-        except ProtectedError:
-            messages.error(self.request, self.protected_data_msg)
-            return redirect(self.protected_data_url)

@@ -1,15 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.db.models import ProtectedError
-
-
-class TimestampedModel(models.Model):
-    """An abstract model with a pair of timestamps."""
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
+from task_manager.general_models import TimestampedModel
 
 
 class Label(TimestampedModel):
