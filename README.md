@@ -32,7 +32,7 @@ List of dependencies, without which the project code will not work correctly:
 * [Usage](#usage)
 * [Development](#development)
   * [Dev Dependencies](#dev-dependencies)
-  * [Root structure](#root-structure)
+  * [Root Structure](#root-structure)
 
 ___
 
@@ -84,7 +84,7 @@ List of dev-dependencies:
 - flake8 = "^6.0.0"
 - coverage = "^7.2.1"
 
-### Project Organization
+### Root Structure
 
 ```bash
 >> tree .
